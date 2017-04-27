@@ -20,6 +20,8 @@ public class PhotoLibraryViewController: UIViewController {
     internal var assets: PHFetchResult<PHAsset>? = nil
     
     public var onSelectionComplete: PhotoLibraryViewSelectionComplete?
+    public lazy var cancelButtonImage: UIImage? = UIImage(named: "libraryCancel", in: CameraGlobals.shared.bundle, compatibleWith: nil)?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+    public var isCancelBarButtonItemOnLeftSide: Bool = false
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -40,12 +42,16 @@ public class PhotoLibraryViewController: UIViewController {
         
         setNeedsStatusBarAppearanceUpdate()
         
-        let buttonImage = UIImage(named: "libraryCancel", in: CameraGlobals.shared.bundle, compatibleWith: nil)?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        let button = UIBarButtonItem(image: self.cancelButtonImage,
+                                     style: UIBarButtonItemStyle.plain,
+                                     target: self,
+                                     action: #selector(dismissLibrary))
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: buttonImage,
-                                                           style: UIBarButtonItemStyle.plain,
-                                                           target: self,
-                                                           action: #selector(dismissLibrary))
+        if self.isCancelBarButtonItemOnLeftSide {
+            navigationItem.leftBarButtonItem = button
+        } else {
+            navigationItem.rightBarButtonItem = button
+        }
         
         view.backgroundColor = UIColor(white: 0.2, alpha: 1)
         view.addSubview(collectionView)
