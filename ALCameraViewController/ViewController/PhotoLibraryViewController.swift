@@ -21,7 +21,7 @@ public class PhotoLibraryViewController: UIViewController {
     
     public var onSelectionComplete: PhotoLibraryViewSelectionComplete?
     public lazy var cancelButtonImage: UIImage? = UIImage(named: "libraryCancel", in: CameraGlobals.shared.bundle, compatibleWith: nil)?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
-    public var isCancelBarButtonItemOnLeftSide: Bool = false
+    public var isCancelBarButtonItemOnLeftSide: Bool = true
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
